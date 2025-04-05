@@ -6,3 +6,4 @@ transformers==4.50.3
 timm==0.9.12
 pandas
 scikit-learn
+gunicorn
