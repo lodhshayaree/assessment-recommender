@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Recommendations for: "{{ query }}"</h1>
+        <table>
+            <tr>
+                <th>Assessment Name</th>
+                <th>Description</th>
+                <th>Similarity Score</th>
+            </tr>
+            {% for _, row in results.iterrows() %}
+            <tr>
+                <td>{{ row.assessment_name }}</td>
+                <td>{{ row.assessment_description }}</td>
+                <td>{{ "%.2f"|format(row.similarity_score) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/">← Go back</a>
+    </div>
+</body>
+</html>
