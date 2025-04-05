@@ -45,6 +45,26 @@ def index():
         return render_template("results.html", query=query, results=results)
     return render_template("index.html")
 
+from flask import jsonify
+
+@app.route("/api/query", methods=["POST"])
+def api_query():
+    data = request.get_json()
+    query = data.get("query", "")
+    if not query:
+        return jsonify({"error": "No query provided"}), 400
+
+    results_df = get_top_recommendations(query)
+    refined = refine_query_with_gemini(query)
+
+    results_list = results_df[["assessment_description", "similarity_score"]].to_dict(orient="records")
+    
+    return jsonify({
+        "query": query,
+        "refined_query": refined,
+        "results": results_list
+    })
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host="0.0.0.0", port=port)
