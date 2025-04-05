@@ -20,7 +20,7 @@ catalog_df = pd.read_csv("model/catalog.csv")
 catalog_embeddings = embedder.encode(catalog_df["assessment_description"].tolist(), show_progress_bar=True)
 
 # Flask app setup
-app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
+app = Flask(__name__, template_folder="frontend/templates", static_folder="frontend/static")
 
 def refine_query_with_gemini(query):
     prompt = f"Rewrite this user query into a formal, structured format suitable for assessment matching: '{query}'"
